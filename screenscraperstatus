@@ -7,6 +7,7 @@ downformaintenance=$(cat index.html | grep -o "Site is down for maintenance")
 if [[ "$downformaintenance" == "Site is down for maintenance" ]]; then
         echo -e "\n================ www.screenscraper.fr is down. Website reply follows: ================"
         echo -e "\n\t\tSite is down for maintenance. Please come back later\n\n"
+	rm -R ~/Downloads/screenscraperstatus
         exit 1
         fi
 
