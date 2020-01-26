@@ -34,7 +34,7 @@ fi
 
 members=$(cat index.html | grep -A 2 "nowrap>inscrits" | grep false | cut -d '/' -f2 | cut -d '.' -f1)
 if [[ "$members" == "false" ]]; then
-	memberstatus="DOWN"
+	memberstatus="DOWN" 
 fi
 members=$(cat index.html | grep -A 2 "nowrap>inscrits" | grep true | cut -d '/' -f2 | cut -d '.' -f1)
 if [[ "$members" == "true" ]]; then
