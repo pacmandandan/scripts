@@ -1,15 +1,21 @@
-!/bin/bash
+#!/bin/bash
+
 screenscraper(){
+clear
+lasttime="0"
+timetilloop="1800"
+looptime=$(python -c "print($timetilloop - $lasttime)")
+
 mkdir ~/Downloads/screenscraperstatus
 cd ~/Downloads/screenscraperstatus
 wget screenscraper.fr
 downformaintenance=$(cat index.html | grep -o "Site is down for maintenance")
 if [[ "$downformaintenance" == "Site is down for maintenance" ]]; then
-        echo -e "\n================ www.screenscraper.fr is down. Website reply follows: ================"
-        echo -e "\n\t\tSite is down for maintenance. Please come back later\n\n"
+	echo -e "\n================ www.screenscraper.fr is down. Website reply follows: ================"
+	echo -e "\n\t\tSite is down for maintenance. Please come back later\n\n"
 	rm -R ~/Downloads/screenscraperstatus
-        exit 1
-        fi
+	exit 1
+	fi
 
 cpu1=$(cat index.html | grep -A 1 "nowrap>CPU1" | grep % | cut -d '>' -f2 | cut -d '<' -f1 | cut -d '&' -f1)
 cpu2=$(cat index.html | grep -A 1 "nowrap>CPU2" | grep % | cut -d '>' -f2 | cut -d '<' -f1 | cut -d '&' -f1)
@@ -58,7 +64,22 @@ echo -e "SCREENSCRAPER API STATUS FOR:"
 echo -e "Unregistered Guests: \t$nonmemberstatus\nFree Members: \t\t$memberstatus\nContributors: \t\t$contributorstatus\n"
 cd
 rm -R ~/Downloads/screenscraperstatus
-sleep 300
+looplabel=$(($timetilloop / 60 | bc))
+starttime=$(date +%s)
+lasttime="0"
+new="0"
+seconds="0"
+minutes="0"
+
+while [ $looptime -gt "0" ]
+	do
+	looptime=$(python -c "print($timetilloop - $lasttime)")
+	loopminutes=$(python -c "print(($timetilloop - $lasttime) / 60)")
+	loopseconds=$(python -c "print(($timetilloop - $lasttime) % 60)")
+	echo -ne "\rScreenScraperStatus will run again in $loopminutes mins $loopseconds seconds......"
+	sleep 1
+	lasttime=$(($lasttime+1))
+	done
 screenscraper
 }
 
