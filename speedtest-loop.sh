@@ -44,7 +44,7 @@ speedloop(){
 		echo "---------------------------------------------------" 
 	fi
 
-	if [[ "$loopstatus" == "ON" ]]; then
+	if [[ "$loop_status" == "ON" ]]; then
 		sleep $loopsleep
 		speedloop
 	fi
